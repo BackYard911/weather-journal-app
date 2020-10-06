@@ -25,13 +25,10 @@ const server = app.listen(port,listening);
 
 app.get('/data', (req,res)=>{
     res.send(projectData);
-    console.log("get + "+projectData);
 })
 
 app.post('/data',(req,res) =>{
-    console.log(projectData);
     projectData = req.body;
-    console.log(req.body);
     res.send("success");
 })
 

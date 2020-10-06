@@ -1,6 +1,4 @@
-
-
-/* Global Variables */
+//Gloval Variables
 const apiKey = '&appid=92ad8be999a1c3fbb3df2efff1f03966&units=metric';
 const baseUrl = 'http://api.openweathermap.org/data/2.5/weather?zip=';
 
@@ -19,7 +17,7 @@ generateBtn.addEventListener('click',buttonPressed);
 
 function buttonPressed(){
     let zip = zipBox.value;
-    fetchData(baseUrl,zip,apiKey)
+    fetchData(baseUrl,zip,apiKey)       //get data from OW API
     .then(data => {
     const postedData = {
         date : newDate,
@@ -28,9 +26,9 @@ function buttonPressed(){
         
     };
     
-    postData('/data',postedData)
+    postData('/data',postedData)        //post data to local server
     .then(()=>{
-        getData('/data')
+        getData('/data')                //get data in local server
         .then((allData) =>{
             updateUI(allData);
             
@@ -44,7 +42,6 @@ const fetchData = async (baseUrl,zip,apiKey)=>{
     const res = await fetch(baseUrl+zip+apiKey)
     try{
         const data = await res.json();
-        console.log(data);
         return data;
     }
     catch(error){
@@ -57,7 +54,6 @@ const getData = async (localUrl) =>{
     
     try{
         const data = await res.json();
-        console.log(data);
         return data;
     }
     catch(error){
@@ -66,17 +62,14 @@ const getData = async (localUrl) =>{
 }
 
 const postData = async (localUrl ='' , data = {}) => {
-    console.log(localUrl);
     const res = await fetch(localUrl, {
         method: 'POST',
         credentials: 'same-origin',
         headers: {'content-type': 'application/json',},
         body: JSON.stringify(data),
     });
-    console.log("success");
     try{
         const newData = await res.text();
-        console.log(newData);
         return newData;
     }
     catch(error){
