@@ -17,8 +17,12 @@ generateBtn.addEventListener('click',buttonPressed);
 
 function buttonPressed(){
     let zip = zipBox.value;
+   
+
+    
     fetchData(baseUrl,zip,apiKey)       //get data from OW API
     .then(data => {
+        console.log(data); 
     const postedData = {
         date : newDate,
         feels_like : data.main.temp + "°C",
@@ -36,6 +40,9 @@ function buttonPressed(){
     })
     
 })
+.catch(error =>{
+    showError();
+})
 }
 
 const fetchData = async (baseUrl,zip,apiKey)=>{
@@ -45,7 +52,7 @@ const fetchData = async (baseUrl,zip,apiKey)=>{
         return data;
     }
     catch(error){
-        console.log("error",error);
+        showError();
     }
 }
 
@@ -57,7 +64,7 @@ const getData = async (localUrl) =>{
         return data;
     }
     catch(error){
-        console.log("error",error);
+        showError();
     }
 }
 
@@ -73,7 +80,7 @@ const postData = async (localUrl ='' , data = {}) => {
         return newData;
     }
     catch(error){
-        console.log("error",error);
+        showError();
     }
 }
 
@@ -83,3 +90,6 @@ function updateUI(data){
     content.innerHTML = data.feelings || "do u feel nothing? :(";
 }
 
+function showError(){
+    alert("something went bad!");
+}
